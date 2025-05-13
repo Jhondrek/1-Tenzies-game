@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
+*{
+  box-sizing: border-box;
+}
+.mainCont{
+  background-color: #F5F5F5;
+  min-height: 500px;
+  margin: auto;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;  
+  flex-direction: column;
+  padding-top:10%;
+}
+
+.mainCont__tittle{
+  color:#2B283A;
+
+
+}
+
+.mainCont__gameDescription{
+  text-align: center;
+  font-family: Inter, arial;
+  font-size: 1.1rem;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  width: 300px;
+}
+
+.mainCont__dice{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 350px;
+  padding: 10px 0px;
+  gap: 1.5rem;
+  margin-bottom: 25px;
+}
+
+.dice__die{
+  color:#2B283A;
+  background-color:white ;
+  border:none;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0px 1.5px 2px;
+  border-radius: 3.5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding: px;
+}
+
+.dice__die--clicked{
+  background-color: green;
+}
+
+.mainCont__mainBtn{
+  background-color: #5035FF;
+  height: 36px;
+  min-width: 92px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0px 5px
+}
+
