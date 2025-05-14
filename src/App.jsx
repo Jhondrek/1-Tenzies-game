@@ -8,46 +8,16 @@ function App() {
 
   const [diceValues, setDiceValues] = useState([])
   const [selectedDice, setSelectedDice] = useState([])
-
+  const [wasSelectionAnError, setWasSelectionAnError] = useState(false)
+  
+  console.log(diceValues)
+  console.log(selectedDice)
   const gameWon = diceValues.length > 0 && diceValues.every((die)=>die.isClicked && die.number === diceValues[2].number)
-  console.log(gameWon)  
+  console.log(`This is the selected dice array: ${selectedDice}`)
   useEffect(()=>{
     const initialDice = setDiceObjects(getDiceNumbers())
     setDiceValues(initialDice)
   },[])
-
-
-  function saveSelectedDie(die){
-    setSelectedDice(prevDie=> {return [...prevDie, die]})
-  }
-
-  function areDiceEqual(selectedDice){
-    return selectedDice[0].number === selectedDice[1].number ? true : false
-  }
-
-  useEffect(()=>{
-    if(Array.isArray(selectedDice) && selectedDice.length ===2){
-      restoreIncorrectDiceUi()
-
-    }
-  },[selectedDice])
-
-  function restoreIncorrectDiceUi(){
-    setTimeout(()=>{
-      setDiceValues((prevDiceValues)=>
-        prevDiceValues.map((die)=>
-          selectedDice.some((selectedDie)=>
-            selectedDie.id === die.id && !areDiceEqual(selectedDice)
-          ) ? {...die, isClicked : !die.isClicked} : die
-        )
-      )
-
-      setSelectedDice([])
-    },2000)
-  }
-
-  
-
 
   //Returns an 10 element array of random numbers from 1 to 10
   function getDiceNumbers(){
@@ -78,6 +48,69 @@ function App() {
       }
     ) 
   }
+
+
+  function resetGame(){
+  const initialDice = setDiceObjects(getDiceNumbers())
+    setDiceValues(initialDice)
+ } 
+
+//Error Checking section 
+//Done
+  function saveSelectedDie(die){
+    setSelectedDice(prevDie=>  [...prevDie, die])
+  }
+
+  //Done
+  function areDiceEqual(currentDie){
+    console.log(selectedDice[0].number )
+    return selectedDice[0].number === currentDie.number
+  }
+
+  useEffect(()=>{
+    if(Array.isArray(selectedDice) && selectedDice.length >=2){
+      
+      
+      restoreIncorrectDiceUi()
+
+    }
+  },[selectedDice])
+
+function restoreIncorrectDiceUi() {
+
+  setTimeout(() => {
+    console.log()
+    console.log()
+
+    setDiceValues((prevDiceValues) =>
+      
+      prevDiceValues.map((die) => {
+        
+        if (
+          selectedDice.some(
+            (selectedDie) =>
+              selectedDie.id === die.id && !areDiceEqual(die)
+          )
+        ) {
+          setSelectedDice((prevSelectedDice) =>
+            prevSelectedDice.slice(0, -1)
+          );
+          return { ...die, isClicked: !die.isClicked };
+        } else {
+          return die;
+        }
+      })
+    );
+
+    
+    setWasSelectionAnError(false);
+  }, 2000);
+}
+
+
+
+
+  
   
 
 
@@ -86,16 +119,16 @@ function App() {
     <section className='mainCont'>
 
       {gameWon ? <Confetti /> : undefined}
-
+      
       <h1 className='mainCont__tittle'>Tenzies</h1>
       <p className='mainCont__gameDescription'>Roll until all dice are the same. Click each die to freeze it at its current value between rolls</p>
       
       <section className='mainCont__dice'>
-        <Dice diceValues = {diceValues} setDiceValues = {setDiceValues} saveSelectedDie = {saveSelectedDie} areDiceEqual ={areDiceEqual} selectedDice = {selectedDice} />
+        <Dice setWasSelectionAnError={setWasSelectionAnError} wasSelectionAnError={wasSelectionAnError} diceValues = {diceValues} setDiceValues = {setDiceValues} saveSelectedDie = {saveSelectedDie} areDiceEqual ={areDiceEqual} selectedDice = {selectedDice} />
       </section>
-
-      <button 
-        className='mainCont__mainBtn' 
+      
+      <button disabled= {wasSelectionAnError}
+        className='mainCont__mainBtn'
         onClick={()=>{gameWon ? resetGame() : shuffleDice()   }}>
           {gameWon ? "Restart Game":"Roll" }
       </button>
