@@ -10,10 +10,9 @@ function App() {
   const [selectedDice, setSelectedDice] = useState([])
   const [wasSelectionAnError, setWasSelectionAnError] = useState(false)
   
-  console.log(diceValues)
   console.log(selectedDice)
+
   const gameWon = diceValues.length > 0 && diceValues.every((die)=>die.isClicked && die.number === diceValues[2].number)
-  console.log(`This is the selected dice array: ${selectedDice}`)
   useEffect(()=>{
     const initialDice = setDiceObjects(getDiceNumbers())
     setDiceValues(initialDice)
@@ -53,6 +52,7 @@ function App() {
   function resetGame(){
   const initialDice = setDiceObjects(getDiceNumbers())
     setDiceValues(initialDice)
+    setSelectedDice([])
  } 
 
 //Error Checking section 
@@ -63,7 +63,6 @@ function App() {
 
   //Done
   function areDiceEqual(currentDie){
-    console.log(selectedDice[0].number )
     return selectedDice[0].number === currentDie.number
   }
 
@@ -79,8 +78,7 @@ function App() {
 function restoreIncorrectDiceUi() {
 
   setTimeout(() => {
-    console.log()
-    console.log()
+    
 
     setDiceValues((prevDiceValues) =>
       
