@@ -55,6 +55,7 @@
 
 .dice__die--clicked{
   background-color: #59E391;
+  pointer-events: none;
 }
 
 .mainCont__mainBtn{

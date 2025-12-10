@@ -12,7 +12,7 @@ export default function Dice(props){
     
 
     function buttonClass(die){
-        //if there are two buttons licked and their numbers are not the same
+        //if there are two buttons Clicked and their numbers are not the same
         if(die.isClicked && props.selectedDice.length >= 2 && props.selectedDice[0].number !== props.selectedDice[props.selectedDice.length-1].number && die.id === props.selectedDice[props.selectedDice.length-1].id && isInSelectedDice(die.id)){
               props.setWasSelectionAnError(true)
             return  "dice__die--wrong customShakeX"

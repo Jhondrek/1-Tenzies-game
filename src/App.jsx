@@ -6,13 +6,16 @@ import Confetti from 'react-confetti'
   
 function App() {
 
+  //contains the values of all the dice in the game
   const [diceValues, setDiceValues] = useState([])
   const [selectedDice, setSelectedDice] = useState([])
   const [wasSelectionAnError, setWasSelectionAnError] = useState(false)
   
-  console.log(selectedDice)
+  
 
   const gameWon = diceValues.length > 0 && diceValues.every((die)=>die.isClicked && die.number === diceValues[2].number)
+  
+  //Generates the initial dices for the game
   useEffect(()=>{
     const initialDice = setDiceObjects(getDiceNumbers())
     setDiceValues(initialDice)
@@ -27,6 +30,7 @@ function App() {
     return diceArray
   }
  
+  //Creates an array with dice objects
   function setDiceObjects(diceNumbers){
 
     const diceObjects =  diceNumbers.map((die, i)=>{
@@ -36,8 +40,8 @@ function App() {
     return diceObjects
   }
 
+  //Returns a new array from the old array of dice, checks each die, if clicked returns the die, else, changes the number to a random numer
   function shuffleDice(){
-
     setDiceValues((prevDice)=>{
         const newDiceSet = prevDice.map((die)=>{ 
             return (die.isClicked? die : {...die, number : Math.floor(Math.random()*10)})
@@ -56,8 +60,10 @@ function App() {
  } 
 
 //Error Checking section 
+
 //Done
   function saveSelectedDie(die){
+
     setSelectedDice(prevDie=>  [...prevDie, die])
   }
 
@@ -75,6 +81,8 @@ function App() {
     }
   },[selectedDice])
 
+
+  
 function restoreIncorrectDiceUi() {
 
   setTimeout(() => {
